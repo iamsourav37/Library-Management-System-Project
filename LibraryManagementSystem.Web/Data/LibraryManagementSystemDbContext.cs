@@ -66,7 +66,8 @@ namespace LibraryManagementSystem.Web.Data
                 NormalizedEmail = superAdminEmail.ToUpper(),
                 NormalizedUserName = superAdminEmail.ToUpper(),
                 Id = superAdminUserId,
-                Name = "Sourav Ganguly"
+                Name = "Sourav Ganguly",
+                SecurityStamp = superAdminUserId.ToString(),
             };
 
             superAdminUser.PasswordHash = new PasswordHasher<ApplicationUser>()

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryManagementSystem.Web.Migrations
 {
     [DbContext(typeof(LibraryManagementSystemDbContext))]
-    [Migration("20241001161106_AddAddressToRequestMemberTable")]
-    partial class AddAddressToRequestMemberTable
+    [Migration("20241001180938_AddIdentityTable")]
+    partial class AddIdentityTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,22 +55,22 @@ namespace LibraryManagementSystem.Web.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2ead4989-d6f7-4091-a836-03067bcc7359"),
-                            ConcurrencyStamp = "2ead4989-d6f7-4091-a836-03067bcc7359",
+                            Id = new Guid("8ed35273-57e8-4e26-b5e9-28853742d784"),
+                            ConcurrencyStamp = "8ed35273-57e8-4e26-b5e9-28853742d784",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
-                            Id = new Guid("a2b86bb5-fdcb-47ec-ba12-49d20d5807aa"),
-                            ConcurrencyStamp = "a2b86bb5-fdcb-47ec-ba12-49d20d5807aa",
+                            Id = new Guid("3bbaba58-ad95-4191-ba50-09fc2a25e489"),
+                            ConcurrencyStamp = "3bbaba58-ad95-4191-ba50-09fc2a25e489",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("2df918ba-b07f-4b1b-ad73-ef3a4aefc907"),
-                            ConcurrencyStamp = "2df918ba-b07f-4b1b-ad73-ef3a4aefc907",
+                            Id = new Guid("c96b41e6-52c5-4fe8-9835-be98e39226e1"),
+                            ConcurrencyStamp = "c96b41e6-52c5-4fe8-9835-be98e39226e1",
                             Name = "Member",
                             NormalizedName = "Member"
                         });
@@ -151,17 +151,18 @@ namespace LibraryManagementSystem.Web.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("42412138-01af-49ca-b112-e1908d77f754"),
+                            Id = new Guid("e43ba58d-538d-45f2-96d9-c68f25df40bf"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6dd8ac95-47c0-4cc9-b5d9-35a38bca2e04",
+                            ConcurrencyStamp = "050c7d23-03cb-4e7e-b1ca-cf53722e0095",
                             Email = "superadmin@lms.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             Name = "Sourav Ganguly",
                             NormalizedEmail = "SUPERADMIN@LMS.COM",
                             NormalizedUserName = "SUPERADMIN@LMS.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBJY5veFbeC0AgR9v6hwBSmNgPsjtaqWsBrAiUxKK6SN9uxahhLns012oxlAZGfMYQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJpwdB0A2OcMjOVaPghlwtkzd66I/ICHuZtGqq4Ko0Vj0DUo1VKes0saFza5ix0vrQ==",
                             PhoneNumberConfirmed = false,
+                            SecurityStamp = "e43ba58d-538d-45f2-96d9-c68f25df40bf",
                             TwoFactorEnabled = false,
                             UserName = "superadmin@lms.com"
                         });
@@ -286,18 +287,18 @@ namespace LibraryManagementSystem.Web.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("42412138-01af-49ca-b112-e1908d77f754"),
-                            RoleId = new Guid("2ead4989-d6f7-4091-a836-03067bcc7359")
+                            UserId = new Guid("e43ba58d-538d-45f2-96d9-c68f25df40bf"),
+                            RoleId = new Guid("8ed35273-57e8-4e26-b5e9-28853742d784")
                         },
                         new
                         {
-                            UserId = new Guid("42412138-01af-49ca-b112-e1908d77f754"),
-                            RoleId = new Guid("a2b86bb5-fdcb-47ec-ba12-49d20d5807aa")
+                            UserId = new Guid("e43ba58d-538d-45f2-96d9-c68f25df40bf"),
+                            RoleId = new Guid("3bbaba58-ad95-4191-ba50-09fc2a25e489")
                         },
                         new
                         {
-                            UserId = new Guid("42412138-01af-49ca-b112-e1908d77f754"),
-                            RoleId = new Guid("2df918ba-b07f-4b1b-ad73-ef3a4aefc907")
+                            UserId = new Guid("e43ba58d-538d-45f2-96d9-c68f25df40bf"),
+                            RoleId = new Guid("c96b41e6-52c5-4fe8-9835-be98e39226e1")
                         });
                 });
 

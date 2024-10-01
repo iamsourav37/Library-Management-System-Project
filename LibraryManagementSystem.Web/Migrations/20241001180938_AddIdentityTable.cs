@@ -63,7 +63,8 @@ namespace LibraryManagementSystem.Web.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RawPassword = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address1 = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -181,24 +182,24 @@ namespace LibraryManagementSystem.Web.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("052c16be-0174-47f1-a609-7cd276204f51"), "052c16be-0174-47f1-a609-7cd276204f51", "Admin", "ADMIN" },
-                    { new Guid("f8a341db-52b8-4530-9205-1f6fb2cb128a"), "f8a341db-52b8-4530-9205-1f6fb2cb128a", "SuperAdmin", "SUPERADMIN" },
-                    { new Guid("f8e06332-1c19-482b-a993-773b8bf29393"), "f8e06332-1c19-482b-a993-773b8bf29393", "Member", "Member" }
+                    { new Guid("3bbaba58-ad95-4191-ba50-09fc2a25e489"), "3bbaba58-ad95-4191-ba50-09fc2a25e489", "Admin", "ADMIN" },
+                    { new Guid("8ed35273-57e8-4e26-b5e9-28853742d784"), "8ed35273-57e8-4e26-b5e9-28853742d784", "SuperAdmin", "SUPERADMIN" },
+                    { new Guid("c96b41e6-52c5-4fe8-9835-be98e39226e1"), "c96b41e6-52c5-4fe8-9835-be98e39226e1", "Member", "Member" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Address1", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("419417c0-693c-44ab-b4ca-8d751b5274e6"), 0, null, "103e7505-ed39-410d-a6d2-463f9c8e499b", "superadmin@lms.com", false, false, null, "Sourav Ganguly", "SUPERADMIN@LMS.COM", "SUPERADMIN@LMS.COM", "AQAAAAIAAYagAAAAEM+COKIRX9x5ZhelpznfqjSTRmbet/faF43LK0eu7WYcwFYMuJQ/E6ZKjJpymg1yrw==", null, false, null, false, "superadmin@lms.com" });
+                values: new object[] { new Guid("e43ba58d-538d-45f2-96d9-c68f25df40bf"), 0, null, "050c7d23-03cb-4e7e-b1ca-cf53722e0095", "superadmin@lms.com", false, false, null, "Sourav Ganguly", "SUPERADMIN@LMS.COM", "SUPERADMIN@LMS.COM", "AQAAAAIAAYagAAAAEJpwdB0A2OcMjOVaPghlwtkzd66I/ICHuZtGqq4Ko0Vj0DUo1VKes0saFza5ix0vrQ==", null, false, "e43ba58d-538d-45f2-96d9-c68f25df40bf", false, "superadmin@lms.com" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("052c16be-0174-47f1-a609-7cd276204f51"), new Guid("419417c0-693c-44ab-b4ca-8d751b5274e6") },
-                    { new Guid("f8a341db-52b8-4530-9205-1f6fb2cb128a"), new Guid("419417c0-693c-44ab-b4ca-8d751b5274e6") },
-                    { new Guid("f8e06332-1c19-482b-a993-773b8bf29393"), new Guid("419417c0-693c-44ab-b4ca-8d751b5274e6") }
+                    { new Guid("3bbaba58-ad95-4191-ba50-09fc2a25e489"), new Guid("e43ba58d-538d-45f2-96d9-c68f25df40bf") },
+                    { new Guid("8ed35273-57e8-4e26-b5e9-28853742d784"), new Guid("e43ba58d-538d-45f2-96d9-c68f25df40bf") },
+                    { new Guid("c96b41e6-52c5-4fe8-9835-be98e39226e1"), new Guid("e43ba58d-538d-45f2-96d9-c68f25df40bf") }
                 });
 
             migrationBuilder.CreateIndex(

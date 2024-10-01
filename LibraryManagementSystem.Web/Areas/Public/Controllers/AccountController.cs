@@ -31,7 +31,24 @@ namespace LibraryManagementSystem.Web.Areas.Public.Controllers
                 return View(loginViewModel);
             }
 
+            var applicationUser = await _userManager.FindByEmailAsync(loginViewModel.Email);
 
+            if(applicationUser == null)
+            {
+                ViewBag.ErrorMessage = "Email or Password is invalid !!!";
+                return View(loginViewModel);
+            }
+
+            var identityResult = await _signInManager.PasswordSignInAsync(applicationUser, loginViewModel.Password, isPersistent: loginViewModel.RememberMe, lockoutOnFailure:false);
+
+            if(identityResult.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");   
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Email or Password is invalid !!!";
+            }
             return View(loginViewModel);
         }
     }

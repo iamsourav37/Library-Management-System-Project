@@ -7,8 +7,16 @@
 <div class="d-flex align-items-center justify-content-center" style="height: 70vh;">
 
     <div class="border border-2 p-5 m-2 mb-4" style="width:600px;">
+
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="mb-5">
+                <p class="text-danger text-center h4">** @ViewBag.ErrorMessage</p>
+            </div>
+
+        }
         <div class="mb-5">
-            <h1 class="text-black text-lg-center">Login to your account !</h1>
+            <p class="text-black text-lg-center h1">Login to your account !</p>
         </div>
 
         <form asp-controller="Account" asp-action="Login">
