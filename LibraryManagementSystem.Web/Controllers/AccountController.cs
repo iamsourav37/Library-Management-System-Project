@@ -1,4 +1,5 @@
-﻿using LibraryManagementSystem.Web.Models.Domain;
+﻿using LibraryManagementSystem.Web.Areas.Admin.Controllers;
+using LibraryManagementSystem.Web.Models.Domain;
 using LibraryManagementSystem.Web.Models.ViewModel.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -6,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryManagementSystem.Web.Areas.Public.Controllers
 {
-    [AllowAnonymous]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -20,6 +20,7 @@ namespace LibraryManagementSystem.Web.Areas.Public.Controllers
             this._roleManager = roleManager;
         }
 
+        [AllowAnonymous]
         public IActionResult Login()
         {
             // Check if the user is already logged in
@@ -35,30 +36,52 @@ namespace LibraryManagementSystem.Web.Areas.Public.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(loginViewModel);
             }
 
             var applicationUser = await _userManager.FindByEmailAsync(loginViewModel.Email);
 
-            if(applicationUser == null)
+            if (applicationUser == null)
             {
                 ViewBag.ErrorMessage = "Email or Password is invalid !!!";
                 return View(loginViewModel);
             }
 
-            var identityResult = await _signInManager.PasswordSignInAsync(applicationUser, loginViewModel.Password, isPersistent: loginViewModel.RememberMe, lockoutOnFailure:false);
+            var identityResult = await _signInManager.PasswordSignInAsync(applicationUser, loginViewModel.Password, isPersistent: loginViewModel.RememberMe, lockoutOnFailure: false);
 
-            if(identityResult.Succeeded)
+            if (identityResult.Succeeded)
             {
-                return RedirectToAction("Index", "Home");   
+                if (await _userManager.IsInRoleAsync(applicationUser, Constant.ConstantValues.SUPER_ADMIN_ROLE))
+                {
+                    return RedirectToAction(nameof(SuperAdminController.Index), "SuperAdmin");
+                }
+                else if (await _userManager.IsInRoleAsync(applicationUser, Constant.ConstantValues.ADMIN_ROLE))
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+                else
+                    return RedirectToAction("Index", "Home");
             }
             else
             {
                 ViewBag.ErrorMessage = "Email or Password is invalid !!!";
             }
             return View(loginViewModel);
+        }
+
+        [Authorize(Roles =Constant.ConstantValues.SUPER_ADMIN_ROLE)]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = Constant.ConstantValues.SUPER_ADMIN_ROLE)]
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
+        {
+            return View();
         }
 
         public async Task<IActionResult> Logout()
