@@ -1,0 +1,40 @@
+﻿@model LibraryManagementSystem.Web.Models.ViewModel.Account.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+}
+
+
+<div class="d-flex align-items-center justify-content-center" style="height: 70vh;">
+
+    <div class="border border-2 p-5 m-2 mb-4" style="width:600px;">
+        <div class="mb-5">
+            <h1 class="text-black text-lg-center">Login to your account !</h1>
+        </div>
+
+        <form asp-controller="Account" asp-action="Login">
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input type="email" class="form-control" asp-for="Email">
+                <span class="text-danger" asp-validation-for="Email"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label"></label>
+                <input type="password" class="form-control" asp-for="Password">
+                <span class="text-danger" asp-validation-for="Password"></span>
+            </div>
+            <div class="mb-3 form-check">
+                <input class="form-check-input" type="checkbox" asp-for="RememberMe">
+                <label class="form-check-label" asp-for="RememberMe"></label>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-dark mt-2 w-100">Submit</button>
+            </div>
+
+        </form>
+    </div>
+
+
+</div>
+
+
+
