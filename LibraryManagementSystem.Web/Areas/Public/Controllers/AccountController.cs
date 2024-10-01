@@ -1,10 +1,12 @@
 ﻿using LibraryManagementSystem.Web.Models.Domain;
 using LibraryManagementSystem.Web.Models.ViewModel.Account;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryManagementSystem.Web.Areas.Public.Controllers
 {
+    [AllowAnonymous]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -20,6 +22,13 @@ namespace LibraryManagementSystem.Web.Areas.Public.Controllers
 
         public IActionResult Login()
         {
+            // Check if the user is already logged in
+            if (User.Identity.IsAuthenticated)
+            {
+                // Redirect to home page or any other page if user is already authenticated
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 
@@ -50,6 +59,12 @@ namespace LibraryManagementSystem.Web.Areas.Public.Controllers
                 ViewBag.ErrorMessage = "Email or Password is invalid !!!";
             }
             return View(loginViewModel);
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login", "Account");
         }
     }
 }
