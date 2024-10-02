@@ -1,0 +1,31 @@
+﻿@model IEnumerable<LibraryManagementSystem.Web.Models.Domain.ApplicationUser>
+@{
+    ViewBag.Title = "All the Admin Users";
+}
+
+
+<div class="container mt-4">
+    <h2>Admin Users</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Name</td>
+                    <td>@user.Email</td>
+                    <td>
+                        <a class="btn btn-warning" asp-controller="Admin" asp-action="Edit" asp-route-id="@user.Id">Edit</a>
+                        <a class="btn btn-danger" asp-controller="Admin" asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,11 +1,13 @@
-﻿using LibraryManagementSystem.Web.Models.Domain;
+﻿using LibraryManagementSystem.Web.Constant;
+using LibraryManagementSystem.Web.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementSystem.Web.Controllers
 {
-    [Authorize(Roles =Constant.ConstantValues.ADMIN_ROLE)]
+    [Authorize(Roles = Constant.ConstantValues.ADMIN_ROLE)]
     public class AdminController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -21,5 +23,6 @@ namespace LibraryManagementSystem.Web.Controllers
             ViewBag.Name = applicationUser.Name;
             return View();
         }
+
     }
 }
