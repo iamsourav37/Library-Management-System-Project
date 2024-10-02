@@ -1,0 +1,70 @@
+﻿@model List<LibraryManagementSystem.Web.Models.ViewModel.Book.BookViewModel>;
+@{
+    ViewBag.Title = "Manage Books";
+}
+
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Book List</h2>
+        <div class="btn-group">
+            <a class="btn btn-dark" asp-controller="Book" asp-action="Create">
+                <i class="bi bi-book"></i> Add New Book
+            </a>
+            <a class="btn btn-dark ms-2" asp-controller="Book" asp-action="CreateCategory">
+                <i class="bi bi-collection"></i> Add New Category
+            </a>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>ISBN</th>
+                <th>Category</th>
+                <th>Total Copies</th>
+                <th>Copies Available</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model)
+            {
+                <tr>
+                    <td>@book.Title</td>
+                    <td>@book.Author</td>
+                    <td>@book.ISBN</td>
+                    <td>@book.CategoryName</td>
+                    <td>@book.TotalCopies</td>
+                    <td>@book.CopiesAvailable</td>
+                    <td>
+                        <a class="btn btn-sm btn-primary me-2" asp-action="Edit" asp-route-bookId="@book.Id">Edit</a>
+                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-@book.Id">Delete</button>
+
+                        <!-- Delete Confirmation Modal -->
+                        <div class="modal fade" id="deleteModal-@book.Id" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel">Delete Book</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to delete the book titled "<strong>@book.Title</strong>"?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <form asp-action="Delete" asp-route-bookId="@book.Id" method="post">
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

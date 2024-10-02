@@ -4,6 +4,8 @@ using LibraryManagementSystem.Web.Models.ViewModel.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using LibraryManagementSystem.Web.Constant;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LibraryManagementSystem.Web.Areas.Public.Controllers
 {
@@ -71,17 +73,91 @@ namespace LibraryManagementSystem.Web.Areas.Public.Controllers
             return View(loginViewModel);
         }
 
-        [Authorize(Roles =Constant.ConstantValues.SUPER_ADMIN_ROLE)]
+        [Authorize(Roles = ConstantValues.SUPER_ADMIN_ROLE)]
+        [HttpGet]
         public IActionResult Register()
         {
-            return View();
+            var allRoles = ConstantValues.GetAllRoles();
+            var registerViewModel = new RegisterViewModel()
+            {
+                RoleList = allRoles.Select(role => new SelectListItem()
+                {
+                    Value = role,
+                    Text = role
+                }).ToList()
+            };
+
+            return View(registerViewModel);
         }
 
         [Authorize(Roles = Constant.ConstantValues.SUPER_ADMIN_ROLE)]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                registerViewModel.RoleList = ConstantValues.GetAllRoles().Select(role => new SelectListItem()
+                {
+                    Value = role,
+                    Text = role
+                }).ToList();
+                var errorMessages = ModelState.Values
+                                 .SelectMany(v => v.Errors)
+                                 .Select(e => e.ErrorMessage);
+
+                ViewBag.ErrorMessage = string.Join(" | ", errorMessages);
+                return View(registerViewModel);
+            }
+
+
+            var applicationUser = new ApplicationUser()
+            {
+                UserName = registerViewModel.Email,
+                Email = registerViewModel.Email,
+                Address1 = registerViewModel.Address1,
+                Name = registerViewModel.Name,
+            };
+
+            var identityResult = await _userManager.CreateAsync(applicationUser, registerViewModel.Password);
+
+            if (identityResult.Succeeded)
+            {
+                IdentityResult result = null;
+                if (await _roleManager.FindByNameAsync(registerViewModel.SelectedRole) != null)
+                {
+                    // Role Exist, add the role to the user
+                    result = await _userManager.AddToRoleAsync(applicationUser, registerViewModel.SelectedRole);
+                }
+                else
+                {
+                    // Invalid role, so add as 'Member'
+                    result = await _userManager.AddToRoleAsync(applicationUser, ConstantValues.MEMBER_ROLE);
+                }
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "SuperAdmin");
+                }
+                else
+                {
+                    registerViewModel.RoleList = ConstantValues.GetAllRoles().Select(role => new SelectListItem()
+                    {
+                        Value = role,
+                        Text = role
+                    }).ToList();
+                    ViewBag.ErrorMessage = string.Join(" | ", result.Errors.Select(e => e.Code));
+                    return View(registerViewModel);
+                }
+            }
+
+            var allRoles = ConstantValues.GetAllRoles();
+            registerViewModel.RoleList = allRoles.Select(role => new SelectListItem()
+            {
+                Value = role,
+                Text = role
+            }).ToList();
+            ViewBag.ErrorMessage = string.Join(" | ", identityResult.Errors.Select(e => e.Description));
+            return View(registerViewModel);
         }
 
         public async Task<IActionResult> Logout()

@@ -15,6 +15,10 @@ namespace LibraryManagementSystem.Web.Areas.Public.Controllers
 
         public IActionResult Index()
         {
+            if(User.IsInRole(Constant.ConstantValues.SUPER_ADMIN_ROLE))
+            {
+                return RedirectToAction("Index", "SuperAdmin");
+            }
             return View();
         }
 

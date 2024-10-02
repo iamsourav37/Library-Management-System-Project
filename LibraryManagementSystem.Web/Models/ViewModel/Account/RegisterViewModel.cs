@@ -10,14 +10,10 @@ namespace LibraryManagementSystem.Web.Models.ViewModel.Account
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
-
-        [DisplayName("Confirm Password")]
-        [Compare("Password")]
-        public string ConfirmPassword { get; set; }
         [Required]
         public string Name { get; set; }
         public string? Address1 { get; set; }
-        public List<SelectListItem> RoleList { get; set; }
+        public List<SelectListItem>? RoleList { get; set; }
 
         [Required]
         public string SelectedRole { get; set; }

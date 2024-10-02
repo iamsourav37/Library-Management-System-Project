@@ -1,0 +1,23 @@
+﻿@model LibraryManagementSystem.Web.Models.ViewModel.CategoryCreateViewModel
+@{
+    ViewBag.Title = "Create Category";
+}
+
+<div class="container d-flex justify-content-center" style="margin-top:50px;">
+    <div class="card shadow-lg p-5" style="width: 100%; max-width: 450px;">
+        <div class="mb-4 d-flex justify-content-between align-items-center">
+            <a class="btn btn-outline-dark ms-2" asp-action="Index" style="position: absolute; left:0;">Back</a>
+            <h2 class="w-100 text-center">Create Category</h2>
+        </div>
+
+        <form asp-controller="Book" asp-action="CreateCategory" method="post">
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" placeholder="Enter Category Name...">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <button class="btn btn-dark w-100">Create Category</button>
+        </form>
+    </div>
+</div>
