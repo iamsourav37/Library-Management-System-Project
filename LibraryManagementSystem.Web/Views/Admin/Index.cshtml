@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Admin Page";
+}
+
+
+<div>
+    <h1>Admin Page</h1>
+    <h2>Hello @ViewBag.Name</h2>
+    <div class="container">
+
+        <a class="btn btn-dark" asp-controller="Book" asp-action="Index">Book List</a>
+        <a class="btn btn-dark" asp-controller="Book" asp-action="GetAllCategories">Category List</a>
+        <a class="btn btn-dark" asp-controller="Book" asp-action="CreateCategory">Create New Category</a>
+    </div>
+
+</div>

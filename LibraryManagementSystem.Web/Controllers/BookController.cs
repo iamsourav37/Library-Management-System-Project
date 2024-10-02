@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryManagementSystem.Web.Controllers
 {
-    [Authorize(Roles = $"{Constant.ConstantValues.SUPER_ADMIN_ROLE}, {Constant.ConstantValues.ADMIN_ROLE}")]
+    [Authorize(Roles = Constant.ConstantValues.ADMIN_ROLE)]
     public class BookController : Controller
     {
         private readonly ICategoryRepository _categoryRepository;
@@ -46,14 +46,31 @@ namespace LibraryManagementSystem.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCategory(CategoryCreateViewModel categoryCreateViewModel)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(categoryCreateViewModel);
             }
 
             var category = _mapper.Map<Category>(categoryCreateViewModel);
 
-            await _categoryRepository.CreateAsync(category);
+
+           await Task.Run(async () =>
+            {
+                var startTime = DateTime.Now;
+                try
+                {
+                    await _categoryRepository.CreateAsync(category);
+                }
+                catch (Exception ex)
+                {
+                    // Handle the exception (e.g., log it)
+                }
+                var endTime = DateTime.Now;
+                var duration = endTime - startTime;
+                // Log or output the duration
+                Console.WriteLine($"Task completed in {duration.TotalMilliseconds} ms");
+            });
+
 
             return RedirectToAction("Index", "Book");
         }

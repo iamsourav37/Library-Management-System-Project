@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LibraryManagementSystem.Web.Areas.Admin.Controllers
+namespace LibraryManagementSystem.Web.Controllers
 {
-    [Authorize(Roles =Constant.ConstantValues.SUPER_ADMIN_ROLE)]
-    public class SuperAdminController : Controller
+    [Authorize(Roles =Constant.ConstantValues.ADMIN_ROLE)]
+    public class AdminController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public SuperAdminController(UserManager<ApplicationUser> userManager)
+        public AdminController(UserManager<ApplicationUser> userManager)
         {
             this._userManager = userManager;
         }
@@ -18,7 +18,7 @@ namespace LibraryManagementSystem.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationUser = await _userManager.GetUserAsync(User);
-            ViewBag.Name = applicationUser?.Name;
+            ViewBag.Name = applicationUser.Name;
             return View();
         }
     }
