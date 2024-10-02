@@ -1,5 +1,7 @@
 using LibraryManagementSystem.Web.Data;
 using LibraryManagementSystem.Web.Models.Domain;
+using LibraryManagementSystem.Web.Repository.Implementation;
+using LibraryManagementSystem.Web.Repository.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +22,13 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddUserStore<UserStore<ApplicationUser, ApplicationRole, LibraryManagementSystemDbContext, Guid>>()
                 .AddRoleStore<RoleStore<ApplicationRole, LibraryManagementSystemDbContext, Guid>>();
 
+
+
+
+#region Add Dependencies
+builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+#endregion
 
 var app = builder.Build();
 
