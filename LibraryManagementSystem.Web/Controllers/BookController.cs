@@ -157,8 +157,22 @@ namespace LibraryManagementSystem.Web.Controllers
             book.Author = bookUpdateViewModel.Author;
             book.TotalCopies = bookUpdateViewModel.TotalCopies;
             book.UpdatedDate = DateOnly.FromDateTime(DateTime.Now);
+            book.CategoryId = bookUpdateViewModel.CategoryId;
 
             await _bookRepository.UpdateBookAsync(book);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Delete(Guid bookId)
+        {
+            var book = await _bookRepository.GetBookByIdAsync(bookId);
+
+            if (book != null)
+            {
+                await _bookRepository.DeleteBookAsync(book);
+            }
+
+
             return RedirectToAction("Index");
         }
     }
