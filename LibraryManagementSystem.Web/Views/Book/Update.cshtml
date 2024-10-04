@@ -1,0 +1,51 @@
+﻿@model LibraryManagementSystem.Web.Models.ViewModel.Book.BookUpdateViewModel;
+@{
+    ViewBag.Title = "Update Book";
+}
+
+<div class="d-flex align-items-center justify-content-center">
+
+    <div class="border border-2 p-5 m-1" style="width:600px;">
+
+        <div class="mt-2">
+            <p class="text-black text-lg-center h1">Update Book</p>
+        </div>
+
+        <form asp-controller="Book" asp-action="Update">
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label"></label>
+                <input class="form-control" asp-for="Title">
+                <span class="text-danger" asp-validation-for="Title"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="ISBN" class="form-label"></label>
+                <input class="form-control" asp-for="ISBN">
+                <span class="text-danger" asp-validation-for="ISBN"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Author" class="form-label"></label>
+                <input class="form-control" asp-for="Author">
+                <span class="text-danger" asp-validation-for="Author"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="TotalCopies" class="form-label"></label>
+                <input class="form-control" asp-for="TotalCopies">
+                <span class="text-danger" asp-validation-for="TotalCopies"></span>
+            </div>
+            <div class="mb-3">
+                <select asp-for="CategoryId" asp-items="Model?.CategoryList" class="form-select form-select-sm">
+                    <option value="" selected>Select the Category</option>
+                </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <div class="d-grid">
+                <button type="submit" class="btn btn-dark mt-2 w-100">Update Book</button>
+            </div>
+
+        </form>
+    </div>
+
+
+</div>

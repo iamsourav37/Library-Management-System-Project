@@ -17,12 +17,9 @@ namespace LibraryManagementSystem.Web.Models.ViewModel.Book
 
         [DisplayName("Total Coppies")]
         public int? TotalCopies { get; set; } = -1;
-        [DisplayName("Coppies Available")]
-        public int? CopiesAvailable { get; set; } = -1;
-
-        public List<SelectListItem> CategoryList { get; set; }
+        public List<SelectListItem>? CategoryList { get; set; }
 
         [Required]
-        public Guid SelectedCategoryId { get; set; }
+        public Guid CategoryId { get; set; }
     }
 }

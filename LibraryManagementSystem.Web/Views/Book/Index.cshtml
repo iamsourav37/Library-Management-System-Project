@@ -42,7 +42,7 @@
                     <td>@book.TotalCopies</td>
                     <td>@book.CopiesAvailable</td>
                     <td>
-                        <a class="btn btn-sm btn-primary me-2" asp-action="Edit" asp-route-bookId="@book.Id">Edit</a>
+                        <a class="btn btn-sm btn-primary me-2" asp-action="Update" asp-route-bookId="@book.Id">Edit</a>
                         <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-@book.Id">Delete</button>
 
                         <!-- Delete Confirmation Modal -->

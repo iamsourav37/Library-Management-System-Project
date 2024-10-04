@@ -28,6 +28,7 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
 #region Add Dependencies
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+builder.Services.AddTransient<IBookRepository, BookRepository>();
 #endregion
 
 var app = builder.Build();

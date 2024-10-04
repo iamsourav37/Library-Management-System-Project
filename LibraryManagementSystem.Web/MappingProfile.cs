@@ -9,9 +9,14 @@ namespace LibraryManagementSystem.Web
     {
         public MappingProfile()
         {
-           
+           // Category
             CreateMap<Category, CategoryCreateViewModel>().ReverseMap();
             CreateMap<CategoryViewModel, Category>().ReverseMap();
+
+            // Book
+            CreateMap<Book, BookCreateViewModel>().ReverseMap();
+            CreateMap<Book, BookUpdateViewModel>().ReverseMap();
+            CreateMap<Book, BookViewModel>().ReverseMap();
                                                
         }
     }
