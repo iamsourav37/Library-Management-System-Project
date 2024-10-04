@@ -31,18 +31,17 @@ namespace LibraryManagementSystem.Web.Controllers
             var allCategories = await _categoryRepository.GetAllCategoryAsync();
             var bookViewModelList = _mapper.Map<List<BookViewModel>>(allBooks);
 
+            // Create a dictionary of categories for faster lookup
+            var categoryDictionary = allCategories.ToDictionary(category => category.Id, category => category.Name);
+
+            // Assign category name to each book view model
             foreach (var bookViewModel in bookViewModelList)
             {
-                allCategories.Where(category =>
+                if (categoryDictionary.TryGetValue(bookViewModel.CategoryId, out var categoryName))
                 {
-                    if (category.Id == bookViewModel.CategoryId)
-                    {
-                        bookViewModel.CategoryName = category.Name;
-                    };
-                    return false;
-                });
+                    bookViewModel.CategoryName = categoryName;
+                }
             }
-
             return View(bookViewModelList);
         }
 
