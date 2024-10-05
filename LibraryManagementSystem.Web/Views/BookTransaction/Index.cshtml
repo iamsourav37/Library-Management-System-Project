@@ -1,0 +1,45 @@
+﻿@model List<LibraryManagementSystem.Web.Models.ViewModel.Book.BookTransactionViewModel>;
+@{
+    ViewBag.Title = "Book Transaction List";
+}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Book Transaction List</h2>
+        <div class="btn-group">
+            <a class="btn btn-dark" asp-controller="BookTransaction" asp-action="IssueBook">
+                <i class="bi bi-book"></i> Issue New Book
+            </a>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Transaction ID</th>
+                <th>Book Title</th>
+                <th>Member Name</th>
+                <th>Borrowed Date</th>
+                <th>Due Date</th>
+                <th>Returned Date</th>
+                <th>Status</th>
+                <th>Penalty Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var transaction in Model)
+            {
+                <tr>
+                    <td>@transaction.TransactionId</td>
+                    <td>@transaction.BookTitle</td>
+                    <td>@transaction.MemberName</td>
+                    <td>@transaction.BorrowedDate.ToString("dd/MM/yyyy")</td>
+                    <td>@transaction.DueDate.ToString("dd/MM/yyyy")</td>
+                    <td>@(transaction.ReturnedDate == DateTime.MinValue ? "Not Returned" : transaction.ReturnedDate.ToString("dd/MM/yyyy"))</td>
+                    <td>@transaction.Status</td>
+                    <td>@transaction.PenaltyAmount == 0 ? "N/A" : @transaction.PenaltyAmount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

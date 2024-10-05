@@ -48,12 +48,15 @@ namespace LibraryManagementSystem.Web.Areas.Admin.Controllers
         public async Task<IActionResult> UserEdit(Guid userId)
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());
+            var currentRole = (await _userManager.GetRolesAsync(user))[0];
+
             var userEditViewModel = _mapper.Map<UserEditViewModel>(user);
             var allRoles = ConstantValues.GetAllRoles();
             userEditViewModel.RoleList = allRoles.Select(role => new SelectListItem()
             {
                 Value = role,
-                Text = role
+                Text = role,
+                Selected = role == currentRole ? true : false
             }).ToList();
             return View(userEditViewModel);
         }

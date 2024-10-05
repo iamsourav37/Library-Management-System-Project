@@ -1,0 +1,43 @@
+﻿@model LibraryManagementSystem.Web.Models.ViewModel.Book.BookTransactionCreateViiewModel
+@{
+    ViewBag.Title = "Issue Book";
+}
+
+<div class="d-flex align-items-center justify-content-center">
+
+    <div class="border border-2 p-5 m-1" style="width:600px;">
+
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="mb-2">
+                <p class="text-danger text-center h4">** @ViewBag.ErrorMessage</p>
+            </div>
+
+        }
+        <div class="mt-2">
+            <p class="text-black text-lg-center h1">Issue A New Book</p>
+        </div>
+
+        <form asp-controller="Book" asp-action="Create">
+
+            <div class="mb-3">
+                <select asp-for="BookId" asp-items="Model?.BookList" class="form-select form-select-sm">
+                    <option value="" selected>Select the Book</option>
+                </select>
+                <span asp-validation-for="BookId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <select asp-for="MemberId" asp-items="Model?.MemberList" class="form-select form-select-sm">
+                    <option value="" selected>Select the Member</option>
+                </select>
+                <span asp-validation-for="MemberId" class="text-danger"></span>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-dark mt-2 w-100">Issue Book</button>
+            </div>
+
+        </form>
+    </div>
+
+
+</div>
