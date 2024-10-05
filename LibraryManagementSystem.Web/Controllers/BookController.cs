@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using LibraryManagementSystem.Web.Constant;
 using LibraryManagementSystem.Web.Models.Domain;
 using LibraryManagementSystem.Web.Models.ViewModel;
 using LibraryManagementSystem.Web.Models.ViewModel.Book;
 using LibraryManagementSystem.Web.Repository.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
@@ -17,12 +19,14 @@ namespace LibraryManagementSystem.Web.Controllers
         private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
         private readonly IBookRepository _bookRepository;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public BookController(ICategoryRepository categoryRepository, IMapper mapper, IBookRepository bookRepository)
+        public BookController(ICategoryRepository categoryRepository, IMapper mapper, IBookRepository bookRepository, UserManager<ApplicationUser> userManager)
         {
             this._categoryRepository = categoryRepository;
             this._mapper = mapper;
             this._bookRepository = bookRepository;
+            this._userManager = userManager;
         }
 
         public async Task<IActionResult> Index()
@@ -180,6 +184,16 @@ namespace LibraryManagementSystem.Web.Controllers
         [HttpGet("list-of-books")]
         public async Task<IActionResult> BookList()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                var applicationUser = await _userManager.GetUserAsync(User);
+                var isAdmin = await _userManager.IsInRoleAsync(applicationUser, ConstantValues.ADMIN_ROLE);
+                if (isAdmin)
+                {
+                    return RedirectToAction("Index", "Book");
+                }
+            }
+
             var allBooks = await _bookRepository.GetAllBooksAsync();
             var allCategories = await _categoryRepository.GetAllCategoryAsync();
             var bookViewModelList = _mapper.Map<List<BookViewModel>>(allBooks);

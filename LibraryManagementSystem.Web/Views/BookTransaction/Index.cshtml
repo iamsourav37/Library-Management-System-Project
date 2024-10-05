@@ -16,7 +16,6 @@
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
             <tr>
-                <th>Transaction ID</th>
                 <th>Book Title</th>
                 <th>Member Name</th>
                 <th>Borrowed Date</th>
@@ -24,20 +23,25 @@
                 <th>Returned Date</th>
                 <th>Status</th>
                 <th>Penalty Amount</th>
+
             </tr>
         </thead>
         <tbody>
             @foreach (var transaction in Model)
             {
                 <tr>
-                    <td>@transaction.TransactionId</td>
                     <td>@transaction.BookTitle</td>
                     <td>@transaction.MemberName</td>
                     <td>@transaction.BorrowedDate.ToString("dd/MM/yyyy")</td>
                     <td>@transaction.DueDate.ToString("dd/MM/yyyy")</td>
-                    <td>@(transaction.ReturnedDate == DateTime.MinValue ? "Not Returned" : transaction.ReturnedDate.ToString("dd/MM/yyyy"))</td>
+                    <td>@(transaction.ReturnedDate == null ? "Not Returned" : transaction.ReturnedDate?.ToString("dd/MM/yyyy"))</td>
+
                     <td>@transaction.Status</td>
-                    <td>@transaction.PenaltyAmount == 0 ? "N/A" : @transaction.PenaltyAmount</td>
+                    <td>@(transaction.PenaltyAmount == 0 ? "N/A" : transaction.PenaltyAmount.ToString())</td>
+                    <td>
+                        <a class="btn btn-sm btn-primary me-2" asp-action="Update" asp-route-bookId="@transaction.TransactionId">Update</a>
+                    </td>
+
                 </tr>
             }
         </tbody>

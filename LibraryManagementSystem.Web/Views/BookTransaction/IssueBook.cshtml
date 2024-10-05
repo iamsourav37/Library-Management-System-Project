@@ -18,7 +18,7 @@
             <p class="text-black text-lg-center h1">Issue A New Book</p>
         </div>
 
-        <form asp-controller="Book" asp-action="Create">
+        <form asp-controller="BookTransaction" asp-action="IssueBook">
 
             <div class="mb-3">
                 <select asp-for="BookId" asp-items="Model?.BookList" class="form-select form-select-sm">

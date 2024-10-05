@@ -23,6 +23,10 @@ namespace LibraryManagementSystem.Web
             CreateMap<ApplicationUser, UserEditViewModel>()
           // Add any specific mappings if property names differ
           .ForMember(dest => dest.RoleList, opt => opt.Ignore()).ReverseMap();
+
+
+            // BookTransaction
+            CreateMap<BookTransactionViewModel, BookTransactionViewModel>().ReverseMap();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using LibraryManagementSystem.Web.Constant;
+﻿using AutoMapper;
+using LibraryManagementSystem.Web.Constant;
 using LibraryManagementSystem.Web.Models.Domain;
 using LibraryManagementSystem.Web.Models.ViewModel.Book;
 using LibraryManagementSystem.Web.Repository.Interfaces;
@@ -16,17 +17,68 @@ namespace LibraryManagementSystem.Web.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IBookRepository _bookRepository;
         private readonly IApplicationUserRepository _applicationUserRepository;
+        private readonly IBookTransactionRepository _bookTransactionRepository;
+        private readonly IMapper _mapper;
 
-        public BookTransactionController(UserManager<ApplicationUser> userManager, IBookRepository bookRepository, IApplicationUserRepository applicationUserRepository)
+        public BookTransactionController(UserManager<ApplicationUser> userManager, IBookRepository bookRepository, IApplicationUserRepository applicationUserRepository, IBookTransactionRepository bookTransactionRepository, IMapper mapper)
         {
             this._userManager = userManager;
             this._bookRepository = bookRepository;
             this._applicationUserRepository = applicationUserRepository;
+            this._bookTransactionRepository = bookTransactionRepository;
+            this._mapper = mapper;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var bookTransactionList = new List<BookTransactionViewModel>();
-            return View(bookTransactionList);
+            var bookTransactionList = await _bookTransactionRepository.GetAllBookTransactionAsync();
+
+            #region Bad Approach
+            /*
+            var bookTransactionViewModel = bookTransactionList.Select(async transaction => new BookTransactionViewModel()
+            {
+                BookId = transaction.BookId,
+                MemberId = transaction.MemberId,
+                DueDate = transaction.DueDate,
+                BorrowedDate = transaction.BorrowedDate,
+                PenaltyAmount = transaction.PenaltyAmount,
+                TransactionId = transaction.TransactionId,
+                Status = transaction.Status,
+                ReturnedDate = transaction.ReturnedDate,
+
+                BookTitle = (await _bookRepository.GetBookByIdAsync(transaction.BookId)).Title,
+               // MemberName = (await _userManager.GetUserNameAsync(User))
+
+            }).ToList();
+            */
+            #endregion
+
+            #region Good Approach
+            List<BookTransactionViewModel> bookTransactionViewModelList = new();
+
+            foreach (var transaction in bookTransactionList)
+            {
+                var book = await _bookRepository.GetBookByIdAsync(transaction.BookId);
+                var member = await _userManager.FindByIdAsync(transaction.MemberId.ToString());
+
+                var viewModel = new BookTransactionViewModel
+                {
+                    BookId = transaction.BookId,
+                    MemberId = transaction.MemberId,
+                    DueDate = transaction.DueDate,
+                    BorrowedDate = transaction.BorrowedDate,
+                    PenaltyAmount = transaction.PenaltyAmount,
+                    TransactionId = transaction.TransactionId,
+                    Status = transaction.Status,
+                    ReturnedDate = transaction.ReturnedDate,
+                    BookTitle = book.Title,  // Fetching book title directly
+                    MemberName = member?.UserName, // Fetching member's name
+                    MemberEmail = member?.Email
+                };
+                bookTransactionViewModelList.Add(viewModel);
+            }
+            #endregion
+
+            return View(bookTransactionViewModelList);
         }
 
         public async Task<IActionResult> IssueBook()
@@ -50,6 +102,46 @@ namespace LibraryManagementSystem.Web.Controllers
             };
 
             return View(bookTransactionCreateViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> IssueBook(BookTransactionCreateViiewModel bookTransactionCreateViiewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(bookTransactionCreateViiewModel);
+            }
+
+            var book = await _bookRepository.GetBookByIdAsync(bookTransactionCreateViiewModel.BookId);
+            if (book != null)
+            {
+                if (book.TotalCopies > 0)
+                {
+                    // Create the BookTransaction Object
+                    var bookTransaction = new BookTransaction()
+                    {
+                        BookId = bookTransactionCreateViiewModel.BookId,
+                        MemberId = bookTransactionCreateViiewModel.MemberId,
+                        BorrowedDate = DateTime.Now,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now,
+                        DueDate = DateTime.Now.AddDays(30),
+                        PenaltyAmount = 0,
+                        Status = Status.Borrowed,
+
+
+                    };
+                    await _bookTransactionRepository.CreateBookTransactionAsync(bookTransaction);
+
+                    // Book Transaction is Created, now update the book availability
+                    book.CopiesAvailable--;
+                    await _bookRepository.UpdateBookAsync(book);
+
+                    return RedirectToAction("Index");
+                }
+            }
+
+            return View(bookTransactionCreateViiewModel);
         }
     }
 }

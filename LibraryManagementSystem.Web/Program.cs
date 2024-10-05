@@ -30,6 +30,7 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<IBookRepository, BookRepository>();
 builder.Services.AddTransient<IApplicationUserRepository, ApplicationUserRepository>();
+builder.Services.AddTransient<IBookTransactionRepository, BookTransactionRepository>();
 #endregion
 
 var app = builder.Build();
