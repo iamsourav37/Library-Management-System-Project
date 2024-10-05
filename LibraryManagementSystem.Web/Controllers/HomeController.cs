@@ -19,9 +19,13 @@ namespace LibraryManagementSystem.Web.Areas.Public.Controllers
             {
                 return RedirectToAction("Index", "SuperAdmin");
             }
-            if (User.IsInRole(Constant.ConstantValues.ADMIN_ROLE))
+            else if (User.IsInRole(Constant.ConstantValues.ADMIN_ROLE))
             {
                 return RedirectToAction("Index", "Admin");
+            }
+            else if(User.IsInRole(Constant.ConstantValues.MEMBER_ROLE))
+            {
+                return RedirectToAction("Index", "Member");
             }
             return View();
         }

@@ -175,5 +175,29 @@ namespace LibraryManagementSystem.Web.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [AllowAnonymous]
+        [HttpGet("list-of-books")]
+        public async Task<IActionResult> BookList()
+        {
+            var allBooks = await _bookRepository.GetAllBooksAsync();
+            var allCategories = await _categoryRepository.GetAllCategoryAsync();
+            var bookViewModelList = _mapper.Map<List<BookViewModel>>(allBooks);
+
+            // Create a dictionary of categories for faster lookup
+            var categoryDictionary = allCategories.ToDictionary(category => category.Id, category => category.Name);
+
+            // Assign category name to each book view model
+            foreach (var bookViewModel in bookViewModelList)
+            {
+                if (categoryDictionary.TryGetValue(bookViewModel.CategoryId, out var categoryName))
+                {
+                    bookViewModel.CategoryName = categoryName;
+                }
+            }
+            return View(bookViewModelList);
+        }
+
+
     }
 }

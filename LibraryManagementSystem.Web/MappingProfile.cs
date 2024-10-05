@@ -2,6 +2,7 @@
 using LibraryManagementSystem.Web.Models.ViewModel.Book;
 using AutoMapper;
 using LibraryManagementSystem.Web.Models.ViewModel;
+using LibraryManagementSystem.Web.Models.ViewModel.Account;
 
 namespace LibraryManagementSystem.Web
 {
@@ -17,7 +18,11 @@ namespace LibraryManagementSystem.Web
             CreateMap<Book, BookCreateViewModel>().ReverseMap();
             CreateMap<Book, BookUpdateViewModel>().ReverseMap();
             CreateMap<Book, BookViewModel>().ReverseMap();
-                                               
+
+            // Account
+            CreateMap<ApplicationUser, UserEditViewModel>()
+          // Add any specific mappings if property names differ
+          .ForMember(dest => dest.RoleList, opt => opt.Ignore()).ReverseMap();
         }
     }
 }

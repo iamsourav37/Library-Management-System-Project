@@ -1,0 +1,17 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "Member Home Page";
+}
+
+<div>
+    <h1>Member Home</h1>
+    <h2>Hello @ViewBag.Name</h2>
+    <div class="container">
+
+        <a class="btn btn-dark" asp-controller="Book" asp-action="BookList">Book List</a>
+        <a class="btn btn-dark" asp-controller="#" asp-action="#">Search Books</a>
+    </div>
+
+</div>

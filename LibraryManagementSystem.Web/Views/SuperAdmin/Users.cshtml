@@ -17,12 +17,13 @@
         <tbody>
             @foreach (var user in Model)
             {
-                <tr>
-                    <td>@user.Name</td>
+                var isCurrentUser = user.Id == ViewBag.CurrentUserId;
+                <tr class="@(isCurrentUser ? "bg-warning" : "")">
+                    <td>@user.Name @(isCurrentUser ? "(YOU)" : "")</td>
                     <td>@user.Email</td>
                     <td>
-                        <a class="btn btn-warning" asp-controller="Admin" asp-action="Edit" asp-route-id="@user.Id">Edit</a>
-                        <a class="btn btn-danger" asp-controller="Admin" asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+                        <a class="btn @(isCurrentUser?"btn-info": "btn-warning") asp-controller="Admin" asp-action="UserEdit" asp-route-userId="@user.Id">Edit</a>
+                        <a class="btn btn-danger" asp-controller="Admin" asp-action="UserDelete" asp-route-userId="@user.Id">Delete</a>
                     </td>
                 </tr>
             }

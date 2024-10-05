@@ -26,6 +26,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-secondary" asp-controller="Home" asp-action="Privacy"><i class="bi bi-shield-lock"></i> Privacy</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-secondary" asp-controller="Book" asp-action="BookList"><i class="bi bi-book"></i> List of Books</a>
+                        </li>
                         @if (User.IsInRole("SuperAdmin"))
                         {
                             <!-- Dropdown with icons -->
@@ -40,12 +43,12 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bi bi-person"></i> Manage Admin
+                                        <a class="dropdown-item" asp-controller="SuperAdmin" asp-action="Users">
+                                            <i class="bi bi-person"></i> Manage Users
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" asp-controller="BookIssue" , asp-action="Index">
                                             <i class="bi bi-journal-check"></i> Issue Book
                                         </a>
                                     </li>
@@ -72,7 +75,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" asp-controller="BookIssue", asp-action="Index">
                                             <i class="bi bi-journal-check"></i> Issue Book
                                         </a>
                                     </li>
