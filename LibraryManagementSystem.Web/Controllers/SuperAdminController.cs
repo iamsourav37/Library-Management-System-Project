@@ -78,6 +78,13 @@ namespace LibraryManagementSystem.Web.Areas.Admin.Controllers
 
             if (identityResult.Succeeded)
             {
+                // Remove the user from all previous roles
+                var currentRoles = await _userManager.GetRolesAsync(user);
+                if (currentRoles != null && currentRoles.Count > 0)
+                {
+                    await _userManager.RemoveFromRolesAsync(user, currentRoles);
+                }
+
                 await _userManager.AddToRoleAsync(user, userEditViewModel.SelectedRole);
 
                 return RedirectToAction("Index");

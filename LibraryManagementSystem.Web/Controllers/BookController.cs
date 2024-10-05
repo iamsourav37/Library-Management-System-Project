@@ -188,7 +188,8 @@ namespace LibraryManagementSystem.Web.Controllers
             {
                 var applicationUser = await _userManager.GetUserAsync(User);
                 var isAdmin = await _userManager.IsInRoleAsync(applicationUser, ConstantValues.ADMIN_ROLE);
-                if (isAdmin)
+                var isSuperAdmin = await _userManager.IsInRoleAsync(applicationUser, ConstantValues.SUPER_ADMIN_ROLE);
+                if (isAdmin || isSuperAdmin)
                 {
                     return RedirectToAction("Index", "Book");
                 }
