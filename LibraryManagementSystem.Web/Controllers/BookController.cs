@@ -13,7 +13,7 @@ using System.Net;
 
 namespace LibraryManagementSystem.Web.Controllers
 {
-    [Authorize(Roles = Constant.ConstantValues.ADMIN_ROLE)]
+    [Authorize(Roles = $"{ConstantValues.ADMIN_ROLE}, {ConstantValues.SUPER_ADMIN_ROLE}")]
     public class BookController : Controller
     {
         private readonly ICategoryRepository _categoryRepository;

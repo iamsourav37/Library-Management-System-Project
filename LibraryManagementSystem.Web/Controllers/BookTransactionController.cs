@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementSystem.Web.Controllers
 {
-    [Authorize(Roles = ConstantValues.ADMIN_ROLE)]
+    [Authorize(Roles = $"{ConstantValues.ADMIN_ROLE}, {ConstantValues.SUPER_ADMIN_ROLE}")]
     public class BookTransactionController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -71,7 +71,7 @@ namespace LibraryManagementSystem.Web.Controllers
                     Status = transaction.Status,
                     ReturnedDate = transaction.ReturnedDate,
                     BookTitle = book.Title,  // Fetching book title directly
-                    MemberName = member?.UserName, // Fetching member's name
+                    MemberName = member?.Name, // Fetching member's name
                     MemberEmail = member?.Email
                 };
                 bookTransactionViewModelList.Add(viewModel);

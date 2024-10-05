@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementSystem.Web.Controllers
 {
-    [Authorize(Roles = Constant.ConstantValues.ADMIN_ROLE)]
+    [Authorize(Roles = $"{ConstantValues.ADMIN_ROLE}, {ConstantValues.SUPER_ADMIN_ROLE}")]
     public class AdminController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
