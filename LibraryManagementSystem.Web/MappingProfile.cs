@@ -26,7 +26,7 @@ namespace LibraryManagementSystem.Web
 
 
             // BookTransaction
-            CreateMap<BookTransactionViewModel, BookTransactionViewModel>().ReverseMap();
+            CreateMap<BookTransactionViewModel, BookTransaction>().ReverseMap();
         }
     }
 }

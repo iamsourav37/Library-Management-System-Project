@@ -40,10 +40,13 @@
                     <td>@transaction.Status</td>
                     <td>@(transaction.PenaltyAmount == 0 ? "N/A" : transaction.PenaltyAmount.ToString())</td>
                     <td>@transaction.MemberName</td>
-                    <td>
-                        <a class="btn btn-sm btn-outline-success me-2" asp-action="ReturnBook" asp-route-transactionId="@transaction.TransactionId"><i class="bi bi-arrow-counterclockwise"></i> Return</a>
-                    </td>
-
+                    @if (transaction.Status != LibraryManagementSystem.Web.Models.Domain.Status.Returned && transaction.Status != LibraryManagementSystem.Web.Models.Domain.Status.Overdue)
+                    {
+                        <td>
+                            <a class="btn btn-sm btn-outline-success me-2" asp-action="ReturnBook" asp-route-transactionId="@transaction.TransactionId"><i class="bi bi-arrow-counterclockwise"></i> Return</a>
+                        </td>
+                    }
+                    
                 </tr>
             }
         </tbody>

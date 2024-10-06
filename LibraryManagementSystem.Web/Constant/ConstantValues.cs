@@ -6,6 +6,8 @@
         public const string ADMIN_ROLE = "Admin";
         public const string MEMBER_ROLE = "Member";
 
+        public const int FINE_AMOUNT = 50;
+
         public static List<string> GetAllRoles()
         {
             return new List<string>()

@@ -1,0 +1,67 @@
+﻿@model LibraryManagementSystem.Web.Models.ViewModel.Book.BookTransactionViewModel;
+@{
+    ViewBag.Title = "Return Book";
+}
+
+<div class="d-flex align-items-center justify-content-center">
+
+    <div class="border border-2 p-5 m-1" style="width:600px;">
+
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="mb-2">
+                <p class="text-danger text-center h4">** @ViewBag.ErrorMessage</p>
+            </div>
+
+        }
+        <div class="mt-2">
+            <p class="text-black text-lg-center h1">Confirm Return Book</p>
+        </div>
+
+        <form asp-controller="BookTransaction" asp-action="ReturnBook">
+            <input type="hidden" asp-for="TransactionId" />
+            <input type="hidden" asp-for="BookId" />
+            <div class="mb-3">
+                <label asp-for="BookTitle" class="form-label"></label>
+                <input class="form-control" asp-for="BookTitle">
+                <span class="text-danger" asp-validation-for="BookTitle"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="MemberName" class="form-label"></label>
+                <input class="form-control" asp-for="MemberName">
+                <span class="text-danger" asp-validation-for="MemberName"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="BorrowedDate" class="form-label"></label>
+                <input class="form-control" asp-for="BorrowedDate">
+                <span class="text-danger" asp-validation-for="BorrowedDate"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="DueDate" class="form-label"></label>
+                <input class="form-control" asp-for="DueDate" >
+                <span class="text-danger" asp-validation-for="DueDate"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="ReturnedDate" class="form-label"></label>
+                <input class="form-control" asp-for="ReturnedDate">
+                <span class="text-danger" asp-validation-for="ReturnedDate"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="PenaltyAmount" class="form-label"></label>
+                <input class="form-control" asp-for="PenaltyAmount">
+                <span class="text-danger" asp-validation-for="PenaltyAmount"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="PenaltyDays" class="form-label"></label>
+                <input class="form-control" asp-for="PenaltyDays">
+                <span class="text-danger" asp-validation-for="PenaltyDays"></span>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-dark mt-2 w-100">Return</button>
+            </div>
+
+        </form>
+    </div>
+
+
+</div>
