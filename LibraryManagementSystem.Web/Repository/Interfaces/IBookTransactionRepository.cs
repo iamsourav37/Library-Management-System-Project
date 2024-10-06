@@ -9,5 +9,7 @@ namespace LibraryManagementSystem.Web.Repository.Interfaces
 
         Task CreateBookTransactionAsync(BookTransaction transaction);
         Task UpdateBookTransactionAsync(BookTransaction transaction);
+
+        Task<IEnumerable<BookTransaction>> GetAllBookTransactionsByUserIdAsync(Guid userId);
     }
 }

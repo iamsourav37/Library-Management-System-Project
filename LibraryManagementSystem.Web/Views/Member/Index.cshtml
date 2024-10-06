@@ -1,17 +1,42 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<LibraryManagementSystem.Web.Models.ViewModel.Book.BookTransactionViewModel>
 @{
     ViewBag.Title = "Member Home Page";
 }
 
-<div>
-    <h1>Member Home</h1>
-    <h2>Hello @ViewBag.Name</h2>
-    <div class="container">
-
-        <a class="btn btn-dark" asp-controller="Book" asp-action="BookList">Book List</a>
-        <a class="btn btn-dark" asp-controller="#" asp-action="#">Search Books</a>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-center">Hello @ViewBag.Name</h2>
+        <br />
+    </div>
+    <div class="text-info">
+        <h2>Your Book Transaction List</h2>
     </div>
 
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Book Title</th>
+                <th>Borrowed Date</th>
+                <th>Due Date</th>
+                <th>Returned Date</th>
+                <th>Status</th>
+                <th>Penalty Amount</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var transaction in Model)
+            {
+                <tr>
+                    <td>@transaction.BookTitle</td>
+                    <td>@transaction.BorrowedDate.ToString("dd/MM/yyyy")</td>
+                    <td>@transaction.DueDate.ToString("dd/MM/yyyy")</td>
+                    <td>@(transaction.ReturnedDate == null ? "Not Returned" : transaction.ReturnedDate?.ToString("dd/MM/yyyy"))</td>
+
+                    <td>@transaction.Status</td>
+                    <td>@(transaction.PenaltyAmount == 0 ? "N/A" : transaction.PenaltyAmount.ToString())</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

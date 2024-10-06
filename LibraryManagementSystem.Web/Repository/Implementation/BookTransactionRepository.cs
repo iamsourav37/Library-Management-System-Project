@@ -24,6 +24,11 @@ namespace LibraryManagementSystem.Web.Repository.Implementation
             return await _dbContext.BookTransactions.ToListAsync();
         }
 
+        public async Task<IEnumerable<BookTransaction>> GetAllBookTransactionsByUserIdAsync(Guid userId)
+        {
+            return await _dbContext.BookTransactions.Include("Member").Where(transaction => transaction.MemberId == userId).ToListAsync();
+        }
+
         public async Task<BookTransaction> GetBookTransactionByIdAsync(Guid id)
         {
             return await _dbContext.BookTransactions.FindAsync(id);

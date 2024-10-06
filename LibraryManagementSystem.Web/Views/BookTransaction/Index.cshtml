@@ -17,7 +17,6 @@
         <thead class="thead-dark">
             <tr>
                 <th>Book Title</th>
-                <th>Member Name</th>
                 <th>Borrowed Date</th>
                 <th>Due Date</th>
                 <th>Returned Date</th>
@@ -32,7 +31,6 @@
             {
                 <tr>
                     <td>@transaction.BookTitle</td>
-                    <td>@transaction.MemberName</td>
                     <td>@transaction.BorrowedDate.ToString("dd/MM/yyyy")</td>
                     <td>@transaction.DueDate.ToString("dd/MM/yyyy")</td>
                     <td>@(transaction.ReturnedDate == null ? "Not Returned" : transaction.ReturnedDate?.ToString("dd/MM/yyyy"))</td>
